@@ -8,10 +8,16 @@ namespace Presentation.WebApi.Controllers;
 
 public class TasksController(IMediator mediator) : BaseController
 {
-    [HttpPost("orchestrator")]
-    public async Task<ActionResult> Create([FromBody] CreateTaskOrchestrator command)
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] CreateTaskCommand command)
     {
         return HandleResult(await mediator.Send(command));
+    }
+    
+    [HttpGet("project/{projectId:guid}")]
+    public async Task<ActionResult> GetByProject(Guid projectId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        return HandleResult(await mediator.Send(new GetTasksByProjectQuery(projectId, pageNumber, pageSize)));
     }
 
     [HttpPatch("{id:guid}/status")]
@@ -25,10 +31,5 @@ public class TasksController(IMediator mediator) : BaseController
     {
         return HandleResult(await mediator.Send(new DeleteTaskCommand(id)));
     }
-
-    [HttpGet("project/{projectId:guid}")]
-    public async Task<ActionResult> GetByProject(Guid projectId)
-    {
-        return HandleResult(await mediator.Send(new GetTasksByProjectQuery(projectId)));
-    }
+    
 }

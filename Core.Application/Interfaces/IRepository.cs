@@ -10,4 +10,6 @@ public interface IRepository<T> where T : BaseEntity
     void Update(T entity);
     void Delete(T entity);
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+    Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(System.Linq.Expressions.Expression<Func<T, bool>> predicate, int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 }

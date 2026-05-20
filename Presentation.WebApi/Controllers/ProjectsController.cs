@@ -12,6 +12,17 @@ public class ProjectsController(IMediator mediator) : BaseController
     {
         return HandleResult(await mediator.Send(command));
     }
+    [HttpGet]
+    public async Task<ActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        return HandleResult(await mediator.Send(new GetAllProjectsQuery(pageNumber, pageSize)));
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult> GetById(Guid id)
+    {
+        return HandleResult(await mediator.Send(new GetProjectByIdQuery(id)));
+    }
 
     [HttpPut]
     public async Task<ActionResult> Update([FromBody] UpdateProjectCommand command)
@@ -25,15 +36,5 @@ public class ProjectsController(IMediator mediator) : BaseController
         return HandleResult(await mediator.Send(new DeleteProjectCommand(id)));
     }
 
-    [HttpGet]
-    public async Task<ActionResult> GetAll()
-    {
-        return HandleResult(await mediator.Send(new GetAllProjectsQuery()));
-    }
-
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult> GetById(Guid id)
-    {
-        return HandleResult(await mediator.Send(new GetProjectByIdQuery(id)));
-    }
+   
 }

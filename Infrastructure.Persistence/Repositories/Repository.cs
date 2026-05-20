@@ -45,4 +45,29 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         return await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var totalCount = await _dbSet.CountAsync(cancellationToken);
+        var items = await _dbSet
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (items, totalCount);
+    }
+
+    public async Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(
+        System.Linq.Expressions.Expression<Func<T, bool>> predicate,
+        int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var query = _dbSet.Where(predicate);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var items = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (items, totalCount);
+    }
 }

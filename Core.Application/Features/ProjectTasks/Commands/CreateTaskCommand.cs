@@ -6,21 +6,21 @@ using MediatR;
 
 namespace Core.Application.Features.ProjectTasks.Commands;
 
-public record CreateTaskOrchestrator(Guid ProjectId, string Title, string? Description, DateTime? DueDate, TaskPriority Priority) : IRequest<RequestResult<Guid>>;
+public record CreateTaskCommand(Guid ProjectId, string Title, string? Description, DateTime? DueDate, TaskPriority Priority) : IRequest<RequestResult<Guid>>;
 
-public class CreateTaskOrchestratorHandler(
+public class CreateTaskCommandHandler(
     IRepository<ProjectTask> taskRepository,
     IRepository<Project> projectRepository)
-    : IRequestHandler<CreateTaskOrchestrator, RequestResult<Guid>>
+    : IRequestHandler<CreateTaskCommand, RequestResult<Guid>>
 {
-    public async Task<RequestResult<Guid>> Handle(CreateTaskOrchestrator request, CancellationToken cancellationToken)
+    public async Task<RequestResult<Guid>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
     {
-        // Orchestration step 1: Validate Project exists
+        
         var project = await projectRepository.GetByIdAsync(request.ProjectId, cancellationToken);
         if (project is null)
             return RequestResult<Guid>.Failure("The specified project does not exist.");
 
-        // Orchestration step 2: Create the Task
+       
         var task = new ProjectTask
         {
             ProjectId = request.ProjectId,

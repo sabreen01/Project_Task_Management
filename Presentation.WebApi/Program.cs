@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 // Clean Architecture Dependencies
 builder.Services.AddInfrastructurePersistence(builder.Configuration);
 
@@ -23,12 +24,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(typeof(ValidationBehavior<,>).Assembly);
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ReportApiVersions = true;
-});
+
 
 // Global Exception Handler Middleware
 builder.Services.AddTransient<GlobalExceptionHandlerMiddleware>();
@@ -43,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

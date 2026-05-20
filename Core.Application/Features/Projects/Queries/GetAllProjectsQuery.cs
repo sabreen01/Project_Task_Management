@@ -7,16 +7,20 @@ using MediatR;
 
 namespace Core.Application.Features.Projects.Queries;
 
-public record GetAllProjectsQuery() : IRequest<RequestResult<List<ProjectDto>>>;
+public record GetAllProjectsQuery(int PageNumber = 1, int PageSize = 10) 
+    : IRequest<RequestResult<PaginatedResult<ProjectDto>>>;
 
 public class GetAllProjectsQueryHandler(IRepository<Project> repository, IMapper mapper)
-    : IRequestHandler<GetAllProjectsQuery, RequestResult<List<ProjectDto>>>
+    : IRequestHandler<GetAllProjectsQuery, RequestResult<PaginatedResult<ProjectDto>>>
 {
-    public async Task<RequestResult<List<ProjectDto>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
+    public async Task<RequestResult<PaginatedResult<ProjectDto>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
     {
-        var projects = await repository.GetAllAsync(cancellationToken);
-        var dto = mapper.Map<List<ProjectDto>>(projects);
+        var (projects, totalCount) = await repository.GetPaginatedAsync(
+            request.PageNumber, request.PageSize, cancellationToken);
         
-        return RequestResult<List<ProjectDto>>.Success(dto);
+        var dto = mapper.Map<List<ProjectDto>>(projects);
+        var paginatedResult = new PaginatedResult<ProjectDto>(dto, totalCount, request.PageNumber, request.PageSize);
+        
+        return RequestResult<PaginatedResult<ProjectDto>>.Success(paginatedResult);
     }
 }
