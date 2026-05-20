@@ -7,15 +7,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Presentation.WebApi.Middleware;
 
-public class GlobalExceptionHandlerMiddleware : IMiddleware
+public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger) : IMiddleware
 {
-    private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
-
-    public GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger)
-    {
-        _logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -24,7 +17,7 @@ public class GlobalExceptionHandlerMiddleware : IMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Exception occurred: {Message}", ex.Message);
+            logger.LogError(ex, "Exception occurred: {Message}", ex.Message);
             await HandleExceptionAsync(context, ex);
         }
     }
