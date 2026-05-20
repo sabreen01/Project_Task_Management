@@ -1,0 +1,7 @@
+﻿services:
+  project_task_management.api:
+    image: project_task_management.api
+    build:
+      context: .
+      dockerfile: Project_Task_Management.API/Dockerfile
+
