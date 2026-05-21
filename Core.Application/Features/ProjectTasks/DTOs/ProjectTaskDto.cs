@@ -1,4 +1,6 @@
-namespace Core.Application.DTOs;
+using Core.Domain.Enums;
+
+namespace Core.Application.Features.ProjectTasks.DTOs;
 
 public class ProjectTaskDto
 {

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Core.Application.Interfaces;
 using Core.Domain.Entities;
 using Infrastructure.Persistence.Context;
@@ -5,25 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class Repository<T> : IRepository<T> where T : BaseEntity
+public class Repository<T>(AppDbContext context) : IRepository<T>
+    where T : BaseEntity
 {
-    private readonly AppDbContext _context;
-    private readonly DbSet<T> _dbSet;
-
-    public Repository(AppDbContext context)
-    {
-        _context = context;
-        _dbSet = context.Set<T>();
-    }
+    private readonly DbSet<T> _dbSet = context.Set<T>();
 
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FindAsync(new object[] { id }, cancellationToken);
+        return await _dbSet.FindAsync([id], cancellationToken);
     }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate = null)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        if (predicate != null)
+        {
+            return _dbSet.Where(predicate);
+        }
+        return _dbSet;
     }
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
@@ -43,31 +42,11 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.SaveChangesAsync(cancellationToken);
+        return await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        var totalCount = await _dbSet.CountAsync(cancellationToken);
-        var items = await _dbSet
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        return (items, totalCount);
-    }
-
-    public async Task<(List<T> Items, int TotalCount)> GetPaginatedAsync(
-        System.Linq.Expressions.Expression<Func<T, bool>> predicate,
-        int pageNumber, int pageSize, CancellationToken cancellationToken = default)
-    {
-        var query = _dbSet.Where(predicate);
-        var totalCount = await query.CountAsync(cancellationToken);
-        var items = await query
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        return (items, totalCount);
+        return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 }

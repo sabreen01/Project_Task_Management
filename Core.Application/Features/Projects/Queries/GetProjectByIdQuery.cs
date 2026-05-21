@@ -1,5 +1,5 @@
 using AutoMapper;
-using Core.Application.DTOs;
+using Core.Application.Features.Projects.DTOs;
 using Core.Application.Helper.Models;
 using Core.Application.Interfaces;
 using Core.Domain.Entities;
