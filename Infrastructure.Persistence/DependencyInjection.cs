@@ -21,6 +21,12 @@ public static class DependencyInjection
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtProvider, JwtProvider>();
 
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+        });
+        services.AddScoped<ICacheService, Infrastructure.Persistence.Services.CacheService>();
+
         return services;
     }
 

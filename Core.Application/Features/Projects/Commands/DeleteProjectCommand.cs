@@ -7,7 +7,7 @@ namespace Core.Application.Features.Projects.Commands;
 
 public record DeleteProjectCommand(Guid Id) : IRequest<RequestResult<bool>>;
 
-public class DeleteProjectCommandHandler(IRepository<Project> repository)
+public class DeleteProjectCommandHandler(IRepository<Project> repository, ICacheService cacheService)
     : IRequestHandler<DeleteProjectCommand, RequestResult<bool>>
 {
     public async Task<RequestResult<bool>> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
@@ -18,6 +18,8 @@ public class DeleteProjectCommandHandler(IRepository<Project> repository)
 
         repository.Delete(project);
         await repository.SaveChangesAsync(cancellationToken);
+
+        await cacheService.InvalidateGroupAsync("Projects", cancellationToken);
 
         return RequestResult<bool>.Success(true, "Project deleted successfully.");
     }

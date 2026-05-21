@@ -10,7 +10,8 @@ public record CreateTaskCommand(Guid ProjectId, string Title, string? Descriptio
 
 public class CreateTaskCommandHandler(
     IRepository<ProjectTask> taskRepository,
-    IRepository<Project> projectRepository)
+    IRepository<Project> projectRepository,
+    ICacheService cacheService)
     : IRequestHandler<CreateTaskCommand, RequestResult<Guid>>
 {
     public async Task<RequestResult<Guid>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
@@ -33,6 +34,8 @@ public class CreateTaskCommandHandler(
 
         await taskRepository.AddAsync(task, cancellationToken);
         await taskRepository.SaveChangesAsync(cancellationToken);
+
+        await cacheService.InvalidateGroupAsync($"Tasks_Proj_{request.ProjectId}", cancellationToken);
 
         return RequestResult<Guid>.Success(task.Id, "Task created successfully within the project.");
     }

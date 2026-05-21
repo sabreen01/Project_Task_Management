@@ -8,7 +8,7 @@ namespace Core.Application.Features.ProjectTasks.Commands;
 
 public record UpdateTaskStatusCommand(Guid Id, TaskStatusOptions Status) : IRequest<RequestResult<Guid>>;
 
-public class UpdateTaskStatusCommandHandler(IRepository<ProjectTask> taskRepository)
+public class UpdateTaskStatusCommandHandler(IRepository<ProjectTask> taskRepository, ICacheService cacheService)
     : IRequestHandler<UpdateTaskStatusCommand, RequestResult<Guid>>
 {
     public async Task<RequestResult<Guid>> Handle(UpdateTaskStatusCommand request, CancellationToken cancellationToken)
@@ -22,6 +22,8 @@ public class UpdateTaskStatusCommandHandler(IRepository<ProjectTask> taskReposit
 
         taskRepository.Update(task);
         await taskRepository.SaveChangesAsync(cancellationToken);
+
+        await cacheService.InvalidateGroupAsync($"Tasks_Proj_{task.ProjectId}", cancellationToken);
 
         return RequestResult<Guid>.Success(task.Id, "Task status updated successfully.");
     }

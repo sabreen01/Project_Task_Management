@@ -9,6 +9,11 @@ services:
     volumes:
       - sqlserver_data:/var/opt/mssql
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
   api:
     build:
       context: .
@@ -19,8 +24,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=Project_Task_Management;User Id=sa;Password=Farah@123;TrustServerCertificate=True
+      - ConnectionStrings__Redis=redis:6379
     depends_on:
       - sqlserver
+      - redis
 
 volumes:
   sqlserver_data:
