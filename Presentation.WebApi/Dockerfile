@@ -7,6 +7,7 @@ COPY ["Core.Domain/Core.Domain.csproj", "Core.Domain/"]
 COPY ["Core.Application/Core.Application.csproj", "Core.Application/"]
 COPY ["Infrastructure.Persistence/Infrastructure.Persistence.csproj", "Infrastructure.Persistence/"]
 COPY ["Presentation.WebApi/Presentation.WebApi.csproj", "Presentation.WebApi/"]
+COPY ["Tests/Tests.csproj", "Tests/"]
 
 # Restore dependencies
 RUN dotnet restore
