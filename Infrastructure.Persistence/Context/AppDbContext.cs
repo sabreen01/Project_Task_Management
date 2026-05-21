@@ -18,6 +18,34 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         
+        // Global Query Filters for Soft Delete
+        modelBuilder.Entity<Project>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<ProjectTask>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+        
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    break;
+                case EntityState.Modified:
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    break;
+                case EntityState.Deleted:
+                    entry.State = EntityState.Modified;
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.DeletedAt = DateTime.UtcNow;
+                    break;
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }
