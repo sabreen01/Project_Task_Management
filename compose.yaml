@@ -1,7 +1,26 @@
-﻿services:
-  project_task_management.api:
-    image: project_task_management.api
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Farah@123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  api:
     build:
       context: .
-      dockerfile: Project_Task_Management.API/Dockerfile
+      dockerfile: Presentation.WebApi/Dockerfile
+    ports:
+      - "5265:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=Project_Task_Management;User Id=sa;Password=Farah@123;TrustServerCertificate=True
+    depends_on:
+      - sqlserver
 
+volumes:
+  sqlserver_data:
