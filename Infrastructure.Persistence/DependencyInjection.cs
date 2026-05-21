@@ -17,6 +17,9 @@ public static class DependencyInjection
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+        services.AddScoped<IPasswordHasher, Infrastructure.Persistence.Authentication.PasswordHasher>();
+        services.AddScoped<IJwtProvider, Infrastructure.Persistence.Authentication.JwtProvider>();
+
         return services;
     }
 }

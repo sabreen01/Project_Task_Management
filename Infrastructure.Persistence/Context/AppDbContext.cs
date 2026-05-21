@@ -11,7 +11,8 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Project> Projects { get; set; }
-    public DbSet<ProjectTask> Tasks { get; set; }
+    public DbSet<ProjectTask> ProjectTasks { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
