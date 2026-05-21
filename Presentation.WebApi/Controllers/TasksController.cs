@@ -1,19 +1,23 @@
 using Core.Application.Features.ProjectTasks.Commands;
+using Core.Application.Features.ProjectTasks.Commands;
 using Core.Application.Features.ProjectTasks.Queries;
 using Core.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.WebApi.Controllers;
 
+[Authorize]
 public class TasksController(IMediator mediator) : BaseController
 {
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> Create([FromBody] CreateTaskCommand command)
     {
         return HandleResult(await mediator.Send(command));
     }
-    
+
     [HttpGet("project/{projectId:guid}")]
     public async Task<ActionResult> GetByProject(Guid projectId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
@@ -27,6 +31,7 @@ public class TasksController(IMediator mediator) : BaseController
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult> Delete(Guid id)
     {
         return HandleResult(await mediator.Send(new DeleteTaskCommand(id)));
