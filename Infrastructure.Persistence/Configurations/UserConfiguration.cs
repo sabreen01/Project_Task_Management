@@ -1,4 +1,5 @@
 using Core.Domain.Entities;
+using Core.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -38,7 +39,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             LastName = "Admin",
             Email = "admin@system.com",
             PasswordHash = "$2a$11$ol8zga7e7xihud6pJ0zLtOwq72anlCXLtxdE.0MoH3/cDJtQwJmVu",
-            Role = Core.Domain.Enums.Role.Admin,
+            Role = Role.Admin,
             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
         });
     }

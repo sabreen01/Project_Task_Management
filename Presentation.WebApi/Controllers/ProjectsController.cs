@@ -31,9 +31,6 @@ public class ProjectsController(IMediator mediator) : BaseController
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> Update(Guid id, [FromBody] UpdateProjectCommand command)
     {
-        if (id != command.Id)
-            return BadRequest("Id mismatch");
-
         return HandleResult(await mediator.Send(command));
     }
 
