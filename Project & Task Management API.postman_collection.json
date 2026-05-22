@@ -17,7 +17,7 @@
               "name": "register",
               "item": [
                 {
-                  "name": "/api/Auth/register",
+                  "name": "/api/v1/Auth/register",
                   "request": {
                     "method": "POST",
                     "header": [
@@ -37,7 +37,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{baseUrl}}/api/Auth/register",
+                      "raw": "{{baseUrl}}/api/v1/Auth/register",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -75,7 +75,7 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/Auth/register",
+                          "raw": "{{baseUrl}}/api/v1/Auth/register",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -101,7 +101,7 @@
               "name": "login",
               "item": [
                 {
-                  "name": "/api/Auth/login",
+                  "name": "/api/v1/Auth/login",
                   "request": {
                     "method": "POST",
                     "header": [
@@ -121,7 +121,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{baseUrl}}/api/Auth/login",
+                      "raw": "{{baseUrl}}/api/v1/Auth/login",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -159,7 +159,7 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/Auth/login",
+                          "raw": "{{baseUrl}}/api/v1/Auth/login",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -190,12 +190,12 @@
               "name": "{id}",
               "item": [
                 {
-                  "name": "/api/Projects/:id",
+                  "name": "/api/v1/Projects/:id",
                   "request": {
                     "method": "GET",
                     "header": [],
                     "url": {
-                      "raw": "{{baseUrl}}/api/Projects/:id",
+                      "raw": "{{baseUrl}}/api/v1/Projects/:id",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -225,7 +225,7 @@
                           }
                         ],
                         "url": {
-                          "raw": "{{baseUrl}}/api/Projects/:id",
+                          "raw": "{{baseUrl}}/api/v1/Projects/:id",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -252,7 +252,7 @@
                   ]
                 },
                 {
-                  "name": "/api/Projects/:id",
+                  "name": "/api/v1/Projects/:id",
                   "request": {
                     "method": "PUT",
                     "header": [
@@ -272,7 +272,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{baseUrl}}/api/Projects/:id",
+                      "raw": "{{baseUrl}}/api/v1/Projects/:id",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -316,7 +316,7 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/Projects/:id",
+                          "raw": "{{baseUrl}}/api/v1/Projects/:id",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -343,12 +343,12 @@
                   ]
                 },
                 {
-                  "name": "/api/Projects/:id",
+                  "name": "/api/v1/Projects/:id",
                   "request": {
                     "method": "DELETE",
                     "header": [],
                     "url": {
-                      "raw": "{{baseUrl}}/api/Projects/:id",
+                      "raw": "{{baseUrl}}/api/v1/Projects/:id",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -378,7 +378,7 @@
                           }
                         ],
                         "url": {
-                          "raw": "{{baseUrl}}/api/Projects/:id",
+                          "raw": "{{baseUrl}}/api/v1/Projects/:id",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -407,7 +407,7 @@
               ]
             },
             {
-              "name": "/api/Projects",
+              "name": "/api/v1/Projects",
               "request": {
                 "method": "POST",
                 "header": [
@@ -427,7 +427,7 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/Projects",
+                  "raw": "{{baseUrl}}/api/v1/Projects",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -464,7 +464,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{baseUrl}}/api/Projects",
+                      "raw": "{{baseUrl}}/api/v1/Projects",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -484,12 +484,12 @@
               ]
             },
             {
-              "name": "/api/Projects",
+              "name": "/api/v1/Projects",
               "request": {
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/api/Projects?pageNumber=1&pageSize=10",
+                  "raw": "{{baseUrl}}/api/v1/Projects?pageNumber=1&pageSize=10",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -522,7 +522,7 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{baseUrl}}/api/Projects?pageNumber=1&pageSize=10",
+                      "raw": "{{baseUrl}}/api/v1/Projects?pageNumber=1&pageSize=10",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -563,12 +563,12 @@
                   "name": "{projectId}",
                   "item": [
                     {
-                      "name": "/api/Tasks/project/:projectId",
+                      "name": "/api/v1/Tasks/project/:projectId",
                       "request": {
                         "method": "GET",
                         "header": [],
                         "url": {
-                          "raw": "{{baseUrl}}/api/Tasks/project/:projectId?pageNumber=1&pageSize=10",
+                          "raw": "{{baseUrl}}/api/v1/Tasks/project/:projectId?pageNumber=1&pageSize=10",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -609,7 +609,7 @@
                               }
                             ],
                             "url": {
-                              "raw": "{{baseUrl}}/api/Tasks/project/:projectId?pageNumber=1&pageSize=10",
+                              "raw": "{{baseUrl}}/api/v1/Tasks/project/:projectId?pageNumber=1&pageSize=10",
                               "host": [
                                 "{{baseUrl}}"
                               ],
@@ -657,7 +657,7 @@
                   "name": "status",
                   "item": [
                     {
-                      "name": "/api/Tasks/:id/status",
+                      "name": "/api/v1/Tasks/:id/status",
                       "request": {
                         "method": "PATCH",
                         "header": [
@@ -677,7 +677,7 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/Tasks/:id/status",
+                          "raw": "{{baseUrl}}/api/v1/Tasks/:id/status",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -722,7 +722,7 @@
                               }
                             },
                             "url": {
-                              "raw": "{{baseUrl}}/api/Tasks/:id/status",
+                              "raw": "{{baseUrl}}/api/v1/Tasks/:id/status",
                               "host": [
                                 "{{baseUrl}}"
                               ],
@@ -752,12 +752,12 @@
                   ]
                 },
                 {
-                  "name": "/api/Tasks/:id",
+                  "name": "/api/v1/Tasks/:id",
                   "request": {
                     "method": "DELETE",
                     "header": [],
                     "url": {
-                      "raw": "{{baseUrl}}/api/Tasks/:id",
+                      "raw": "{{baseUrl}}/api/v1/Tasks/:id",
                       "host": [
                         "{{baseUrl}}"
                       ],
@@ -787,7 +787,7 @@
                           }
                         ],
                         "url": {
-                          "raw": "{{baseUrl}}/api/Tasks/:id",
+                          "raw": "{{baseUrl}}/api/v1/Tasks/:id",
                           "host": [
                             "{{baseUrl}}"
                           ],
@@ -816,7 +816,7 @@
               ]
             },
             {
-              "name": "/api/Tasks",
+              "name": "/api/v1/Tasks",
               "request": {
                 "method": "POST",
                 "header": [
@@ -836,7 +836,7 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/api/Tasks",
+                  "raw": "{{baseUrl}}/api/v1/Tasks",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -873,7 +873,7 @@
                       }
                     },
                     "url": {
-                      "raw": "{{baseUrl}}/api/Tasks",
+                      "raw": "{{baseUrl}}/api/v1/Tasks",
                       "host": [
                         "{{baseUrl}}"
                       ],

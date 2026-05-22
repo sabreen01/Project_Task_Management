@@ -21,7 +21,8 @@ The project strictly adheres to **Clean Architecture** to ensure separation of c
 - **ORM:** Entity Framework Core (Code-First)
 - **Caching:** Redis (Distributed Caching)
 - **Architecture Patterns:** Clean Architecture, CQRS (MediatR), Repository Pattern
-- **Security:** JWT (JSON Web Tokens) Authentication, BCrypt Password Hashing, Role-Based Authorization
+- **Security:** JWT Authentication, Role-Based Authorization
+- **API Versioning:** Asp.Versioning.Mvc (`v1` by default)
 - **Validation:** FluentValidation
 - **Containerization:** Docker & Docker Compose
 
@@ -105,18 +106,18 @@ dotnet ef database update --project Infrastructure.Persistence --startup-project
 ## 🎯 API Endpoints Summary
 
 **Auth**
-- `POST /api/Auth/register`
-- `POST /api/Auth/login`
+- `POST /api/v1/Auth/register`
+- `POST /api/v1/Auth/login`
 
 **Projects**
-- `GET /api/Projects` (Public/User)
-- `GET /api/Projects/{id}` (Public/User)
-- `POST /api/Projects` (Admin Only)
-- `PUT /api/Projects/{id}` (Admin Only)
-- `DELETE /api/Projects/{id}` (Admin Only)
+- `GET /api/v1/Projects` (Public/User)
+- `GET /api/v1/Projects/{id}` (Public/User)
+- `POST /api/v1/Projects` (Admin Only)
+- `PUT /api/v1/Projects/{id}` (Admin Only)
+- `DELETE /api/v1/Projects/{id}` (Admin Only)
 
 **Tasks**
-- `GET /api/Tasks/project/{projectId}` (Public/User)
-- `POST /api/Tasks` (Admin Only)
-- `PATCH /api/Tasks/{id}/status` (User & Admin)
-- `DELETE /api/Tasks/{id}` (Admin Only)
+- `GET /api/v1/Tasks/project/{projectId}` (Public/User)
+- `POST /api/v1/Tasks` (Admin Only)
+- `PATCH /api/v1/Tasks/{id}/status` (User & Admin)
+- `DELETE /api/v1/Tasks/{id}` (Admin Only)
