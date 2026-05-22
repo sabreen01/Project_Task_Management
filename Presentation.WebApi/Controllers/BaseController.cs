@@ -1,11 +1,12 @@
-
+using Asp.Versioning;
 using Core.Application.Helper.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class BaseController : ControllerBase
 {
     protected ActionResult HandleResult<T>(RequestResult<T> result)
