@@ -4,6 +4,7 @@ using Core.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Core.Domain.Constants;
 
 namespace Presentation.WebApi.Controllers;
 
@@ -11,7 +12,7 @@ namespace Presentation.WebApi.Controllers;
 public class TasksController(IMediator mediator) : BaseController
 {
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.Admin)]
     public async Task<ActionResult> Create([FromBody] CreateTaskCommand command)
     {
         return HandleResult(await mediator.Send(command));
@@ -30,7 +31,7 @@ public class TasksController(IMediator mediator) : BaseController
     }
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.Admin)]
     public async Task<ActionResult> Delete(Guid id)
     {
         return HandleResult(await mediator.Send(new DeleteTaskCommand(id)));

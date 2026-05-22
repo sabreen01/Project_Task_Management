@@ -4,6 +4,7 @@ using Core.Application.Helper.Models;
 using Core.Application.Interfaces;
 using Core.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.Application.Features.Projects.Queries;
 

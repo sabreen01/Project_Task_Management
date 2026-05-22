@@ -25,7 +25,7 @@ public class GetTasksByProjectQueryHandler(IRepository<ProjectTask> taskReposito
             return RequestResult<PaginatedResult<ProjectTaskDto>>.Success(cachedResult);
         }
 
-        var query = taskRepository.GetAll(t => t.ProjectId == request.ProjectId);
+        var query = taskRepository.GetAll(t => t.ProjectId == request.ProjectId).AsNoTracking();
         var totalCount = await query.CountAsync(cancellationToken);
         
         var tasks = await query

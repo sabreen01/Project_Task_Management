@@ -24,7 +24,7 @@ public class GetAllProjectsQueryHandler(IRepository<Project> repository, ICacheS
             return RequestResult<PaginatedResult<ProjectDto>>.Success(cachedResult);
         }
 
-        var query = repository.GetAll();
+        var query = repository.GetAll().AsNoTracking();
         var totalCount = await query.CountAsync(cancellationToken);
         
         var projects = await query

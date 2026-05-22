@@ -3,6 +3,7 @@ using Core.Application.Features.Projects.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Core.Domain.Constants;
 
 namespace Presentation.WebApi.Controllers;
 
@@ -10,7 +11,7 @@ namespace Presentation.WebApi.Controllers;
 public class ProjectsController(IMediator mediator) : BaseController
 {
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.Admin)]
     public async Task<ActionResult> Create([FromBody] CreateProjectCommand command)
     {
         return HandleResult(await mediator.Send(command));
@@ -28,14 +29,14 @@ public class ProjectsController(IMediator mediator) : BaseController
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.Admin)]
     public async Task<ActionResult> Update(Guid id, [FromBody] UpdateProjectCommand command)
     {
         return HandleResult(await mediator.Send(command));
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleConstants.Admin)]
     public async Task<ActionResult> Delete(Guid id)
     {
         return HandleResult(await mediator.Send(new DeleteProjectCommand(id)));
