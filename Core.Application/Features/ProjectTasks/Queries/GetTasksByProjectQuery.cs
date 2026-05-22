@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.Application.Extensions;
 using Core.Application.Features.ProjectTasks.DTOs;
 using Core.Application.Helper.Models;
 using Core.Application.Interfaces;
@@ -11,7 +12,7 @@ namespace Core.Application.Features.ProjectTasks.Queries;
 public record GetTasksByProjectQuery(Guid ProjectId, int PageNumber = 1, int PageSize = 10) 
     : IRequest<RequestResult<PaginatedResult<ProjectTaskDto>>>;
 
-public class GetTasksByProjectQueryHandler(IRepository<ProjectTask> taskRepository, ICacheService cacheService)
+public class GetTasksByProjectQueryHandler(IRepository<ProjectTask> taskRepository, ICacheService cacheService, IMapper mapper)
     : IRequestHandler<GetTasksByProjectQuery, RequestResult<PaginatedResult<ProjectTaskDto>>>
 {
     public async Task<RequestResult<PaginatedResult<ProjectTaskDto>>> Handle(GetTasksByProjectQuery request, CancellationToken cancellationToken)
@@ -32,16 +33,7 @@ public class GetTasksByProjectQueryHandler(IRepository<ProjectTask> taskReposito
             .OrderByDescending(t => t.CreatedAt)
             .Skip((request.PageNumber - 1) * request.PageSize)
             .Take(request.PageSize)
-            .Select(t => new ProjectTaskDto
-            {
-                Id = t.Id,
-                ProjectId = t.ProjectId,
-                Title = t.Title,
-                Description = t.Description,
-                DueDate = t.DueDate,
-                Priority = (int)t.Priority,
-                Status = (int)t.Status
-            })
+            .MapTo<ProjectTaskDto>(mapper)
             .ToListAsync(cancellationToken);
 
         var paginatedResult = new PaginatedResult<ProjectTaskDto>(tasks, totalCount, request.PageNumber, request.PageSize);
